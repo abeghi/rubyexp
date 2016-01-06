@@ -1,0 +1,22 @@
+// green screen algorithm
+
+var fgImage = new SimpleImage("drewRobert.png");
+// set foreground image
+
+var bgImage = new SimpleImage("dinos.png");
+// set background image
+
+var outputImage = new SimpleImage(fgImage.getWidth(),fgImage.getHeight());
+// set output image with fgImage size
+
+for (var pixel of fgImage.values()) {
+    if (pixel.getGreen() > 200) {
+        var x = pixel.getX();
+        var y = pixel.getY();
+        var bgPixel = bgImage.getPixel(x , y);
+        outputImage.setPixel(x, y, bgPixel);
+    }
+    else {outputImage.setPixel(x, y, pixel);
+    }
+}
+print(outputImage);

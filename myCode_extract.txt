@@ -1,0 +1,97 @@
+// steganography
+// start image + hide image to define end image (eg 4751 + 5236 = 4752)
+// for each pixel:
+// 1 take first digits from start image and clean other digits (4751 > 4700)
+// 2 take other digits from end image, cleaning following ones (5236 > 0052)
+// 3 combine (4752)
+// > base 2
+
+
+// step 1 > first 2 digits > chop2hide function
+function pixchange(pixval) {
+    var x = Math.floor(pixval/16) * 16;
+    return x;
+}
+
+function chop2hide(image) {
+    for (var px of image.values()) {
+        px.setRed(pixchange(px.getRed()));
+        px.setGreen(pixchange(px.getGreen()));
+        px.setBlue(pixchange(px.getBlue()));
+    }
+    return image;
+}
+
+
+// step 2 > second 2 digits > shift function
+function shift(im) {
+    var nim = new SimpleImage(im.getWidth(),im.getHeight());
+    for (var px of im.values()) {
+        var x = px.getX();
+        var y = px.getY();
+        var npx = nim.getPixel(x,y);
+        npx.setRed(Math.floor(px.getRed()/16));
+        npx.setGreen(Math.floor(px.getGreen()/16));
+        npx.setBlue(Math.floor(px.getBlue()/16));
+    }
+    return nim;
+}
+
+
+// step 3 > end image > combine function
+// step 3.1 > newpv function
+
+function newpv(p,q) {
+    var sum = p + q;
+    if ((p + q) > 255) {
+        sum = "Error";
+    }
+   return sum;
+}
+
+function combine(startimage,hideimage) {
+    var stegoimage = new SimpleImage(startimage.getWidth(),startimage.getHeight());
+    for (var px of stegoimage.values()) {
+        var x = px.getX();
+        var y = px.getY();
+        var stpx = stegoimage.getPixel(x,y);
+        stpx.setRed(newpv(startimage.getRed(x,y),hideimage.getRed(x,y)));
+        stpx.setGreen(newpv(startimage.getGreen(x,y),hideimage.getGreen(x,y)));
+        stpx.setBlue(newpv(startimage.getBlue(x,y),hideimage.getBlue(x,y)));
+    }
+    return stegoimage;
+}
+
+
+// step 4 > final program
+var start = new SimpleImage("usain.jpg");
+var hide = new SimpleImage("skyline.jpg");
+
+print(start);
+start = chop2hide(start);
+print(start);
+print(hide);
+hide = shift(hide);
+print(hide);
+var stego = combine(start,hide);
+print(stego);
+
+
+
+// step 5 > extract
+
+function extract(image) {
+    var hiddenimage = new SimpleImage(image.getWidth(),image.getHeight());
+    for (var pixel of hiddenimage.values()) {
+        var x = pixel.getX();
+        var y = pixel.getY();
+        var imagepixel = image.getPixel(x,y);
+        pixel.setRed((imagepixel.getRed()%16)*16);
+        pixel.setGreen((imagepixel.getGreen()%16)*16);
+        pixel.setBlue((imagepixel.getBlue()%16)*16);
+    }
+    return hiddenimage;
+}
+
+var extractedhidden = extract(stego);
+print(extractedhidden);

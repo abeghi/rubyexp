@@ -1,0 +1,23 @@
+// duplicate
+
+var image = new SimpleImage("rodger.png");
+print(image);
+
+function duplicate(image) {
+    var duplicateimage = new SimpleImage(image.getWidth() *2,image.getHeight() *2);
+    for (var pixel of duplicateimage.values()) {
+        var x = pixel.getX();
+        var y = pixel.getY();
+        var imagepixel = image.getPixel(x,y);
+        if (x <= image.getWidth() && y <= image.getHeight()) {
+            pixel.setPixel(x,y,imagepixel);
+        }
+        else {
+            pixel.setPixel(x-image.getWidth(),x-image.getHeight(),imagepixel);
+        }
+    }
+    return duplicateimage;
+}
+
+var dupl = duplicate(image);
+print(dupl);

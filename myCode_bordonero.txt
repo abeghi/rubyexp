@@ -1,0 +1,11 @@
+// programma che disegna quadrato rosso con cornice sinistra nera - angoli
+
+var image = new SimpleImage(200,200);
+for (var p of image.values()) {
+    var x = p.getX();
+    var y = p.getY();
+    var w = image.getWidth();
+    if (x > y || x + y > w || x >= 20)
+    p.setRed(255);
+}
+print(image);

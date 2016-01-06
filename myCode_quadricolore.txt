@@ -1,0 +1,19 @@
+// programma che disegna 4 quadrati di colori diversi
+
+var image = new SimpleImage(200,200);
+w = image.getWidth();
+print(w);
+for (var p of image.values()){
+    x = p.getX();
+    y = p.getY();
+    if (x < w/2){
+        p.setRed(255);
+    }
+    if (y > w/2){
+        p.setBlue(255);
+    }
+    if (x >= w/2 && y <= w/2){
+        p.setGreen(255);
+    }
+}
+print(image);

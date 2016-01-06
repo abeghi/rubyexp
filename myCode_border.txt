@@ -1,0 +1,31 @@
+// write your code here
+
+function setBlack(pixel) {
+    pixel.setRed(0);
+    pixel.setGreen(0);
+    pixel.setBlue(0);
+    return pixel;
+}
+
+function pixelOnEdge(pixel, image, borderWidth) {
+    var x = pixel.getX();
+    var y = pixel.getY();
+    var w = image.getWidth();
+    var h = image.getHeight();
+    if (x < borderWidth || x > w - borderWidth || y < borderWidth || y > h - borderWidth){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+image = new SimpleImage("drewRobert.png");
+for (var pixel of image.values()) {
+    if (pixelOnEdge(pixel, image, 5) == true){
+        pixel = setBlack(pixel);
+    } else {
+        pixel = pixel;
+    }
+}
+
+print(image);

@@ -1,0 +1,18 @@
+// write your code here
+
+function moreRed(pixel,add) {
+    var r = pixel.getRed();
+    if (add <= 255 - r) {
+        pixel.setRed(r + add);
+    }
+    else {
+        pixel.setRed(r);
+    }
+}
+
+image = new SimpleImage("dinos.png");
+for (var pixel of image.values()) {
+    pixel = moreRed(pixel,200);
+}
+
+print(image);

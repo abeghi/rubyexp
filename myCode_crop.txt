@@ -1,0 +1,28 @@
+// steganography assignment 1
+
+var start = new SimpleImage("astrachan.jpg");
+var hide = new SimpleImage("duvall.jpg");
+print(start);
+print(hide);
+
+
+var startw = start.getWidth();
+var starth = start.getHeight();
+var hidew = hide.getWidth();
+var hideh = hide.getHeight();
+
+// funzione per croppare immagine più grande
+function crop(image,width,height) {
+    var cropimage = new SimpleImage(width,height);
+    for (var px of cropimage.values()) {
+        var x = px.getX();
+        var y = px.getY();
+        var pixel = image.getPixel(x,y);
+        cropimage.setPixel(x,y,pixel);
+    }
+    crop = cropimage;
+    return(crop);
+}
+
+crop = crop(start,hidew,hideh);
+print(crop);

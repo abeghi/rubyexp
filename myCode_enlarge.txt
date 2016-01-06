@@ -1,0 +1,17 @@
+// write your code here
+
+var image = new SimpleImage("usain.jpg");
+
+print(image);
+
+var doubleimage = new SimpleImage(2*image.getWidth(),2*image.getHeight());
+for (var pixel of doubleimage.values()) {
+    var x = Math.floor(pixel.getX()/2);
+    var y = Math.floor(pixel.getY()/2);
+    var imagepixel = image.getPixel(x,y);
+    pixel.setRed(imagepixel.getRed());
+    pixel.setGreen(imagepixel.getGreen());
+    pixel.setBlue(imagepixel.getBlue());
+}
+
+print(doubleimage);

@@ -1,0 +1,53 @@
+// write your code here
+
+function setBlack(pixel) {
+    pixel.setRed(0);
+    pixel.setGreen(0);
+    pixel.setBlue(0);
+    return pixel;
+}
+
+function pixelOnVerticalEdge(pixel, image, borderWidth) {
+    var x = pixel.getX();
+    var w = image.getWidth();
+    if (x < borderWidth || x > w - borderWidth){
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function pixelOnHorizontalEdge(pixel, image, borderWidth) {
+    var y = pixel.getY();
+    var h = image.getHeight();
+    if (y < borderWidth || y > h - borderWidth) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+function pixelOnEdgeDifferentThicknesses(pixel, image, verticalborderWidth, horizontalborderWidth) {
+    var x = pixel.getX();
+    var w = image.getWidth();
+    var y = pixel.getY();
+    var h = image.getHeight();
+    if (x < verticalborderWidth || x > w - verticalborderWidth) || y < horizontalborderWidth || y > h - horizontalborderWidth) {
+        pixel = setBlack(pixel)
+    }
+    else {
+        pixel = pixel
+    }
+}
+
+image = new SimpleImage("drewRobert.png");
+for (var pixel of image.values()) {
+    if (pixelOnVerticalEdge(pixel, image, 50) == true || pixelOnHorizontalEdge(pixel, image, 20) == true){
+        pixel = setBlack(pixel);
+    }
+    else {
+        pixel = pixel;
+    }
+}
+
+print(image);

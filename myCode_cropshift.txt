@@ -1,0 +1,39 @@
+// chop2hide + pixchange
+
+var image = new SimpleImage("astrachan.jpg");
+var image2 = new SimpleImage("duvall.jpg");
+
+function pixchange(pixelvalue) {
+    var x = Math.floor(pixelvalue/16) * 16;
+    return x;
+}
+
+function chop2hide(image) {
+    for (var pixel of image.values()) {
+        pixel.setRed(pixchange(pixel.getRed()));
+        pixel.setGreen(pixchange(pixel.getGreen()));
+        pixel.setBlue(pixchange(pixel.getBlue()));
+    }
+    return image;
+}
+
+print(image);
+print(chop2hide(image));
+
+// shift function
+
+function shift(image) {
+    var shiftimage = new SimpleImage(image.getWidth(),image.getHeight());
+    for (var pixel of image.values()) {
+        var x = pixel.getX();
+        var y = pixel.getY();
+        var shiftpixel = shiftimage.getPixel(x,y);
+        shiftpixel.setRed(Math.floor(pixel.getRed()/16));
+        shiftpixel.setGreen(Math.floor(pixel.getGreen()/16));
+        shiftpixel.setBlue(Math.floor(pixel.getBlue()/16));
+    }
+    return shiftimage;
+}
+
+print(image2);
+print(shift(image2));
